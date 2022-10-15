@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Credit;
 use Illuminate\Http\Request;
+use PDF;
 
 class InvoicesController extends Controller
 {
@@ -26,5 +27,28 @@ class InvoicesController extends Controller
     {
         $invoices = Credit::whereNotNull('invoice_id')->get();
         return view('invoices', ['invoices' => $invoices]);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showPDF()
+    {
+        $invoice = Credit::findOrFail(13);
+        return view('files.pdf', ['invoice' => $invoice]);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function makePDF(Request $request)
+    {
+        $invoice = Credit::findOrFail($request->id);
+        $pdf = PDF::loadView('files.pdf', ['invoice' => $invoice]);
+        return $pdf->download($invoice->invoice_id.'.pdf');
     }
 }

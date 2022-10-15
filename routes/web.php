@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// use App\Http\Controllers\InvoicesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,12 @@ Route::get('/edit-language/{id}', [App\Http\Controllers\LanguageController::clas
 Route::post('/update-language', [App\Http\Controllers\LanguageController::class, 'updateLanguage'])->name('update-language');
 Route::post('/delete_language', [App\Http\Controllers\LanguageController::class, 'deleteLanguage'])->name('delete-language');
 Route::post('/change-password', [App\Http\Controllers\AccountController::class, 'changePassword'])->name('change-password');
+
+
+Route::get('/show_pdf', [App\Http\Controllers\InvoicesController::class, 'showPDF'])->name('show-pdf');
+// Route::get('/make_pdf', [App\Http\Controllers\InvoicesController::class, 'makePDF'])->name('make-pdf');
+
+Route::get('pdfview',array('as'=>'pdfview','uses'=>'App\Http\Controllers\InvoicesController@makePDF'));
 
 Route::get('/file-upload', [App\Http\Controllers\FileController::class, 'index'])->name('file-upload');
 
@@ -57,8 +64,6 @@ Route::post('/cart_quantity', [App\Http\Controllers\PaymentController::class, 'g
 Route::get('/shop-product', [App\Http\Controllers\ShoppingController::class, 'shopProduct'])->name('shop-product');
 
 Route::get('/invoices', [App\Http\Controllers\InvoicesController::class, 'index'])->name('invoices');
-
-
 
 Route::post('/upload-file', [App\Http\Controllers\FileController::class, 'uploadFile'])->name('upload-file');
 Route::get('/file-history', [App\Http\Controllers\FileController::class, 'fileHistory'])->name('file-history');
